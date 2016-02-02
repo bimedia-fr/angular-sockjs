@@ -1,0 +1,26 @@
+{
+  "name": "angular-sockjs",
+  "main": "src/index.js",
+  "version": "0.2.35",
+  "description": "AngularJS module for SockJS with multiplex support",
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4",
+    "sockjs-client": "~1.0.3",
+    "websocket-multiplex": "git+https://github.com/sockjs/websocket-multiplex.git#v0.1"
+  },
+  "resolutions": {
+    "angular": "1.4.7"
+  }
+}
