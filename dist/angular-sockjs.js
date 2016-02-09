@@ -61,6 +61,7 @@ define([
                     var c = self.getChannel(channel);
                     var message = (options.formatter || formatter)(event, data);
 
+                    $log.debug('Sending', event, 'on', c.name);
                     if (!c) {
                         return false;
                     }
@@ -75,7 +76,8 @@ define([
                  * @returns {*}
                  */
                 self.initSocket = function (url) {
-                    self.socket = null;
+                    self.socket = self.multiplexer = null;
+                    self.channels.splice(0);
 
                     if (url) {
                         options.address = url;
@@ -88,11 +90,24 @@ define([
                         return $log.error(new Error("Must configure the address"));
                     }
 
+                    if (!WebSocketMultiplex) {
+                        return $log.error(new Error("Must include WebSocketMultiplex for channels to work"));
+                    }
+
                     self.socket = new SockJS(options.address);
+                    self.multiplexer = new WebSocketMultiplex(self.socket);
                     $log.info('Connecting to ' + options.address);
 
+                    self.socket.onopen = function() {
+                        $log.debug('Socket onopen event called');
+                    };
+
                     self.socket.onclose = function() {
-                        self.socket = null;
+                        $log.debug('Socket onclose event called');
+                        for (var c in self.channels) {
+                            self.channels[c].connected = false;
+                            $rootScope.$broadcast(options.broadcastPrefix + self.channels[c].name + ".close");
+                        }
                     };
 
                     self.interval = $interval(function() {
@@ -115,14 +130,6 @@ define([
                         return $log.error(new Error("Channel must be defined"));
                     }
 
-                    if (!WebSocketMultiplex) {
-                        return $log.error(new Error("Must include WebSocketMultiplex for channels to work"));
-                    }
-
-                    if (!self.multiplexer) {
-                        self.multiplexer = new WebSocketMultiplex(self.socket);
-                    }
-
                     $log.info('Initializing "' + channel.name + '" channel');
 
                     var c = self.multiplexer.channel(channel.name);
@@ -138,7 +145,11 @@ define([
 
                     c.onopen = function() {
                         c.connected = true;
-                        $rootScope.$broadcast(options.broadcastPrefix + c.name + ".open");
+                        setTimeout(function() {
+                            if (self.socket && self.socket.readyState === 1) {
+                                $rootScope.$broadcast(options.broadcastPrefix + c.name + ".open");
+                            }
+                        }, 200);
                     };
 
                     c.onmessage = function(msg) {
@@ -175,18 +186,13 @@ define([
                  * Checks if socket is opened
                  */
                 self.checkSocket = function () {
-                    if (!self.socket || self.socket.readyState === 3) {
-                        $interval.cancel(self.interval);
-
-                        self.socket = null;
-                        self.channels.forEach(function(channel) {
-                            $rootScope.$broadcast(options.broadcastPrefix + channel.name + ".close");
-                        });
-                        self.channels.splice(0);
-
-                        self.initSocket(options.address);
-                        for (var rc in self.registredChannels) {
-                            self.initChannel(self.registredChannels[rc]);
+                    if (self.socket) {
+                        if (self.socket.readyState === 3) {
+                            $interval.cancel(self.interval);
+                            self.initSocket(options.address);
+                            for (var rc in self.registredChannels) {
+                                self.initChannel(self.registredChannels[rc]);
+                            }
                         }
                     }
                 };
