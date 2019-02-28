@@ -1,0 +1,190 @@
+{
+  "env": {
+    "amd": true,
+    "browser": true,
+    "node": true
+  },
+  "plugins": [
+    "angular"
+  ],
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true
+    }
+  },
+  "globals": {
+    "angular": true,
+    "_": true,
+    "Promise": true
+  },
+  "rules": {
+    // specific angular rules (https://github.com/Gillespie59/eslint-plugin-angular#rules)
+    "angular/angularelement": 2,            // use `angular.element` instead of `$` or `jQuery`
+    "angular/avoid-scope-typos": 2,         // avoid mistakes when naming methods defined on the scope object
+    "angular/controller-as": 1,             // disallow assignments to `$scope` in controllers
+    "angular/controller-as-vm": 1,          // require and specify a capture variable for this in controllers
+    "angular/deferred": 1,                  // use `$q(function(resolve, reject){})` instead of `$q.deferred`
+    "angular/document-service": 2,          // use `$document` instead of document
+    "angular/controller-as-route": 2,       // require the use of `controllerAs` in routes or states
+    "angular/empty-controller": 2,          // disallow empty controllers
+    "angular/foreach": 2,                   // use `angular.forEach` instead of native `Array.prototype.forEach`
+    "angular/json-functions": 2,            // enforce use of `angular.fromJson` and `angular.toJson`
+    "angular/log": 1,                       // use the `$log` service instead of the console methods
+    "angular/module-getter": 2,             // enforce to reference modules with the getter syntax
+    "angular/module-setter": 2,             // disallow to assign modules to variables
+    "angular/no-http-callback": 2,          // disallow the $http methods `success()` and `error()`
+    "angular/no-jquery-angularelement": 2,  // disallow to wrap angular.element objects with jQuery or $
+    "angular/no-inline-template": 2,        // disallow the use of inline complex templates (more than one element)
+    "angular/on-destroy": 2,                // check for common misspelling `$on('destroy', ...)`
+    "angular/timeout-service": 2,           // use `$timeout` instead of `setTimeout`
+    "angular/typecheck-array": 2,           // use `angular.isArray` instead of `typeof` comparisons
+    "angular/typecheck-date": 2,            // use `angular.isDate` instead of `typeof` comparisons
+    "angular/window-service": 2,            // use `$window` instead of `window`
+
+    // global js rules (https://eslint.org/docs/rules/)
+    "camelcase": [
+      "error",
+      {
+        "properties": "never"
+      }
+    ],
+    "dot-location": [
+      "warn",
+      "property"
+    ],
+    "eol-last": [
+      "error",
+      "always"
+    ],
+    "eqeqeq": [
+      "error",
+      "smart"
+    ],
+    "indent": [
+      "error",
+      4,
+      {
+        "SwitchCase": 1,
+        "MemberExpression": 1,
+        "FunctionDeclaration": {
+          "parameters": "first"
+        },
+        "FunctionExpression": {
+          "parameters": "first"
+        },
+        "CallExpression": {
+          "arguments": "first"
+        },
+        "ArrayExpression": "first",
+        "ObjectExpression": "first",
+        "flatTernaryExpressions": true
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "lines-around-directive": [
+      "error", {
+        "before": "never",
+        "after": "always"
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 140,
+        "comments": 140,
+        "tabWidth": 4,
+        "ignoreTrailingComments": true,
+        "ignoreStrings": true
+      }
+    ],
+    "max-statements": [
+      "error",
+      25,
+      {
+        "ignoreTopLevelFunctions": true
+      }
+    ],
+    "no-empty": "error",
+    "no-empty-function": "error",
+    "no-eval": "error",
+    "no-lonely-if": "error",
+    "no-mixed-spaces-and-tabs": "error",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxBOF": 0,
+        "maxEOF": 1
+      }
+    ],
+    "no-negated-condition": "error",
+    "no-process-exit": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "no-whitespace-before-property": "error",
+    "one-var-declaration-per-line": ["error", "initializations"],
+    "padded-blocks": ["error", "never"],
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "return"
+      },
+      {
+        "blankLine": "always",
+        "prev": ["const", "let", "var"],
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": ["const", "let", "var"],
+        "next": ["const", "let", "var"]
+      },
+      {
+        "blankLine": "always",
+        "prev": "directive",
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": "directive",
+        "next": "directive"
+      }
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "spaced-comment": [
+      "error",
+      "always"
+    ],
+    "multiline-comment-style": [
+      "error",
+      "separate-lines"
+    ]
+  }
+}

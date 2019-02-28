@@ -1,26 +1,17 @@
 {
   "name": "angular-sockjs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "AngularJS module for SockJS with multiplex support",
-  "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "src/index.js",
+  "author": "Jérôme Creignou",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "angular": "~1.4",
+    "sockjs-client": "~1.0.3",
+    "websocket-multiplex": "git+https://github.com/sockjs/websocket-multiplex.git#v0.1"
   },
-  "author": "Bimedia",
-  "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.8.8",
-    "gulp-angular-templatecache": "^1.4.1",
-    "gulp-bower": "0.0.6",
-    "gulp-clean": "^0.3.1",
-    "gulp-concat": "^2.4.1",
-    "gulp-jslint": "^0.1.7",
-    "gulp-less": "^1.3.6",
-    "gulp-minify-css": "^0.4.6",
-    "gulp-ng-annotate": "^1.1.0",
-    "gulp-rename": "^1.2.0",
-    "gulp-sourcemaps": "^1.2.2",
-    "gulp-uglify": "^1.0.1",
-    "gulp-yuidoc": "^0.1.2"
+    "eslint": "^5.9.0",
+    "eslint-plugin-angular": "^4.0.0"
   }
 }
